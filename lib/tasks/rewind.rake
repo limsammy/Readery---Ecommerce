@@ -4,6 +4,8 @@ namespace :rewind do
     OrderItem.all.each_with_index do |order_item, index|
       puts "Reallocating.. #{index}"
 
+      binding.pry
+
       order_item.unit_price = order_item.item.price
       order_item.save!
     end

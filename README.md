@@ -1,3 +1,7 @@
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage)](https://codeclimate.com/github/codeclimate/codeclimate/test_coverage)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
+
 # The Pivot - Base Project
 
 The following Rails app is used as the base project for [The Pivot](http://backend.turing.io/module3/projects/the_pivot).

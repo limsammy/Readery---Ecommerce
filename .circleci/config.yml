@@ -1,0 +1,78 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+
+jobs:
+  build:
+    environment:
+      CC_TEST_REPORTER_ID: eb538c1d4949777ac270258f8d1fa766e086cf32d594d5f21fc66a20128b7fb6
+    
+    working_directory: ~/personal_pivot
+
+    steps:
+      
+      - checkout
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+        
+      # Database setup
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:schema:load
+      
+      - run: bundle exec ./cc-test-reporter before-build
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+            
+            bundle exec rspec --format progress \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+                            $TEST_FILES
+
+      - run: bundle exec ./cc-test-reporter after-build
+
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
+
+  deploy:
+    working_directory: ~/personal_pivot
+    steps:
+        - checkout
+        - run: 
+            name: Deploy to heroku
+            command: |
+              git push heroku master
+
+workflows:
+  version: 1
+  build-and-deploy-dev:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build

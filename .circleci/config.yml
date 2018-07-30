@@ -7,7 +7,7 @@ version: 2
 jobs:
   build:
     environment:
-      CC_TEST_REPORTER_ID: eb538c1d4949777ac270258f8d1fa766e086cf32d594d5f21fc66a20128b7fb6
+      CC_TEST_REPORTER_ID: d35a87f0edb27939058f530259b3c15d77ebfcf64240223bebab175bdbfe56a3
     
     working_directory: ~/personal_pivot
 

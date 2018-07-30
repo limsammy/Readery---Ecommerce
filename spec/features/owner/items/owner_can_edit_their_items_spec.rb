@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe 'an owner can visit owner dashboard' do
   describe 'and see a link for all items' do
     it 'when clicked that link should be the owner item index with owner functionality' do
+      skip
       owner = create(:owner)
       store = create(:store, user: owner)
       item = create(:item, store: store)

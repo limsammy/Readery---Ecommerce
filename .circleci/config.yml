@@ -8,7 +8,10 @@ jobs:
   build:
     environment:
       CC_TEST_REPORTER_ID: d35a87f0edb27939058f530259b3c15d77ebfcf64240223bebab175bdbfe56a3
-    
+
+    docker: 
+      - image: circleci/ruby:2.4.1-node-browsers
+
     working_directory: ~/personal_pivot
 
     steps:
@@ -60,6 +63,8 @@ jobs:
           destination: test-results
 
   deploy:
+    docker: 
+      - image: circleci/ruby:2.4.1-node-browsers
     working_directory: ~/personal_pivot
     steps:
         - checkout

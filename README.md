@@ -18,6 +18,8 @@ All users have a password of `password` if you want to login and explore.
 
 ## Additional Setup
 
-Run `$ rake rewind:go` if this is your first time running on the machine. What this command does is go through all the OrderItems and assigns a unit_price from it's associated item.
+1. Run `$ rake rewind:go` if this is your first time running on the machine. What this command does is go through all the OrderItems and assigns a unit_price from it's associated item.
 
-Run `$ rake reassign:go`
+2. Run `$ rake reassign:store_reassignment` to associate all existing records with a single store
+
+3. Run `$ rake reassign:images_to_cloudinary` to associate all existing items with cloudinary images
